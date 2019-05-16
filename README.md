@@ -45,7 +45,7 @@ Native cluster management using kubernetes is ideal. Work in progress.
 
 
 ## The ONLY REQUIREMENT is you need a wifi SSID to connect the RPi Zero W's.
-To create an exclusive wifi test environment, an eth0 wlan0 can be configured on the Raspberry Pi 3B+.  I won't go into that here.  To keep it simple, I am using my home wifi.
+To create an exclusive wifi test environment, an eth0 wlan0 bridge can be configured on the Raspberry Pi 3B+.  I won't go into that here.  To keep it simple, I am using my home wifi.
 
 
 ## Hardware Install: Stuff You do by hand
@@ -54,7 +54,7 @@ Time Estimate: 45 mninutes to 1 hour
 1. Assemble your Raspberry Pi ClusterHat.  Check the [Clusterhat.com Official Guide](https://clusterhat.com/setup-assembly) if you have any questions.
 
 ### Provision the sd card for Raspberry Pi 3B+
-2. Download [Lite Controller](http://dist.8086.net/clusterhat/ClusterHAT-2019-04-08-lite-1-controller.zip) from clusterhat.com
+2. Download [Lite Controller image](http://dist.8086.net/clusterhat/ClusterHAT-2019-04-08-lite-1-controller.zip) from clusterhat.com
 3. Write the image to a microsd and place into the Raspberry Pi 3B+
 4. Eject the fresh microsd and reinsert into your computer.
 5. Copy ```ssh``` from ```./sd_card/boot-controller/ssh``` to the microsd ```boot``` partition.  Optional: also edit wpa_supplicant.conf.skel to include your wifi ssid and key.  Rename the file to ```wpa_supplicant.conf``` and also copy over to the microsd.
@@ -62,7 +62,7 @@ Time Estimate: 45 mninutes to 1 hour
 7. Turn on the Raspberry Pi 3B+
 
 ### Provision the sd cards for Raspberry Pi Zero W's
-8. Download [Hypriot-rpi-v1.10.0](https://github.com/hypriot/image-builder-rpi/releases/download/v1.10.0/hypriotos-rpi-v1.10.0.img.zip) from hypriot.com.
+8. Download [Hypriot-rpi-v1.10.0 image](https://github.com/hypriot/image-builder-rpi/releases/download/v1.10.0/hypriotos-rpi-v1.10.0.img.zip) from hypriot.com.
 9.  Write the image to 4x microsd, eject after writing, and reinsert into the computer to finish loading files.
 10. Copy the ```ssh``` file from ```./sd_card/boot-zero/ssh```
 11. Copy the ```cmdline.txt``` file from ```./sd_card/boot-zero/cmdline.txt```
