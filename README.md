@@ -18,7 +18,7 @@ Optional Equipment (Pictured)
 Develop a fully autonomous environment for the deployment and management of a Raspberry Pi Clusterhat device.
 
 ## Phase One: Container Environment
-Of course, we will be using containers to deploy workloads to our cluster.  Installing docker on the latest raspian-stretch-lite image was a breaze.  I simply used the get.docker.com install script and had docker installed in no time.  Unfortunatly, the RPi-Zero's we not that simple.
+Of course, we will be using containers to deploy workloads to our cluster.  Installing docker on the latest raspian-stretch-lite image was a breaze.  I simply used the get.docker.com install script and had docker installed in no time.  Unfortunatly, the RPi-Zero's were not that simple.
 
 ### Docker on Raspberry Pi Zero W - Use Hypriot.
 I took a few approaches to setting up docker on the RPi Zero's:
@@ -45,7 +45,7 @@ Native cluster management using kubernetes is ideal. Work in progress.
 
 
 ## The ONLY REQUIREMENT is you need a wifi SSID to connect the RPi Zero W's.
-To create a simple test wifi environment, an eth0 wlan0 can be configured on the Raspberry Pi 3B+.  I won't go into that here.  To keep it simple, I am using my home wifi.
+To create an exclusive wifi test environment, an eth0 wlan0 can be configured on the Raspberry Pi 3B+.  I won't go into that here.  To keep it simple, I am using my home wifi.
 
 
 ## Hardware Install: Stuff You do by hand
@@ -63,13 +63,14 @@ Time Estimate: 45 mninutes to 1 hour
 
 ### Provision the sd cards for Raspberry Pi Zero W's
 8. Download [Hypriot-rpi-v1.10.0](https://github.com/hypriot/image-builder-rpi/releases/download/v1.10.0/hypriotos-rpi-v1.10.0.img.zip) from hypriot.com.
-9.  Write the image to 4x microsd and insert into 4x Raspberry Pi Zero Ws
+9.  Write the image to 4x microsd, eject after writing, and reinsert into the computer to finish loading files.
 10. Copy the ```ssh``` file from ```./sd_card/boot-zero/ssh```
 11. Copy the ```cmdline.txt``` file from ```./sd_card/boot-zero/cmdline.txt```
 12. You must edit the ```wpa_supplicant.conf.skel``` to include your SSID and key.  Then rename the file to ```wpa_supplicant.conf``` and copy to the sd cards.
 13. Insert the sd cards into the Raspberry Pi Zero W's
 
-### Setup up the Ansible Playbook hosts.ini file
+### Setup up the Ansible Playbook hosts.ini file (THIS SECTION IS GETTING AUTOMATED!)
+
 14. Find the IP address of your raspberry pi zero's
     * Login to your raspberry pi 3b+
         ```bash
@@ -85,10 +86,11 @@ Time Estimate: 45 mninutes to 1 hour
         sudo apt-get update && \
         sudo apt-get install -y nmap
         ```
-    * You need to know a little about your network here.  Which range of IP's does your local network use? Two most common are 192.168.1.0/24 and 192.168.0.1/24.  The postfix ```/24``` tells the computer to check the IP range from 1-255.
+    * You need to know a little about your network here.  Which range of IP's does your local network use? Two most common are 192.168.1.0/24 and 192.168.0.1/24.  The postfix ```/24``` tells the computer to check the IP range from 1-255. 
         ```bash
         sudo nmap -sn 192.168.0.1/24
         ```
+        * Source: [itsfoss.com - find what devices are connected to network](https://itsfoss.com/how-to-find-what-devices-are-connected-to-network-in-ubuntu/)
 
 
 ## Install Steps:
