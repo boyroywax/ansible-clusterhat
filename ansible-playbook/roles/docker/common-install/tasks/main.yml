@@ -1,0 +1,17 @@
+---
+
+- name: install python3-pip
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - python3-pip
+    - python3-dev
+    - setuptools
+
+
+- name: pip install docker
+  pip:
+    name:
+    - docker
+    - docker-compose>=1.7.0

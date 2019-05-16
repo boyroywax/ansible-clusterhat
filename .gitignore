@@ -1,0 +1,6 @@
+sd_card/boot-zero/wpa_supplicant.conf
+sd_card/boot-zero-no_resize/wpa_supplicant.conf
+xauth
+cpuminer-multi-docker/.DS_Store
+sd_card/.DS_Store
+.DS_Store

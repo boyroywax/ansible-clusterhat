@@ -1,0 +1,88 @@
+---
+
+# - name: make folder for docker data
+#   file:
+#     path: /mnt/pizero/docker-data
+#     state: directory
+
+
+# - name: stop the docker service
+#   service:
+#     name: docker
+#     enabled: yes
+#     state: stopped
+
+
+# - name: replace docker.service line
+#   lineinfile:
+#     path: /lib/systemd/system/docker.service
+#     regexp: '^ExecStart='
+#     line: 'ExecStart=/usr/bin/dockerd -g /mnt/pizero/docker-data -H unix://'
+
+
+# - name: systemctl daemon needs reloaded
+#   systemd:
+#     daemon_reload: yes
+
+# - name: start docker service
+#   service:
+#     name: docker
+#     enabled: yes
+#     state: started
+
+- name: add raspberry sources to file /etc/apt/sources.list
+  lineinfile:
+    path: /etc/apt/sources.list
+    line: deb [arch=armhf] https://download.docker.com/linux/raspbian/ stretch stable
+    create: yes
+    state: present
+
+- name: Add an Apt signing key, uses whichever key is at the URL
+  apt_key:
+    url: https://download.docker.com/linux/raspbian/gpg
+    state: present
+
+- name: Upgrade apt cache
+  apt:
+    update-cache: yes
+    upgrade: yes
+    allow-unauthenticated: true
+    force_apt_get: true
+    force: true
+
+- name: download reqs
+  apt:
+    name: "{{ packages }}"
+    # install_recommends: false
+    # allow-unauthenticated: true
+    # force_apt_get: true
+    # force: true
+  vars:
+    packages:
+    - apt-transport-https
+    - software-properties-common
+
+- name: download docker-ce
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - docker-ce
+
+- name: set user to docker group
+  user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: yes
+
+- name: Remove useless packages from the cache
+  apt:
+    autoclean: yes
+  async: 2000
+  poll: 5
+
+- name: Remove dependencies that are no longer required
+  apt:
+    autoremove: yes
+  async: 2000
+  poll: 5

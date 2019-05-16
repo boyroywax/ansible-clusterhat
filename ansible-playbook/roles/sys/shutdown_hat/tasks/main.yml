@@ -1,0 +1,35 @@
+---
+
+- name: wait for ssh to stop
+  wait_for: 
+    port: 22
+    host: "{{ item }}"
+    delay: 10 
+    state: stopped
+    timeout: 60
+  with_items: 
+    - "{{ hostvars['inventory_hostname'] | list }}"
+  delegate_to: localhost
+
+- name: create scripts dir in user home if not there
+  file:
+    path: "/home/{{ ansible_user }}/scripts"
+    state: directory
+
+- name: copy hat-off script template
+  template:
+    src: "hat-off.j2"
+    dest: "/home/{{ ansible_user }}/scripts/hat-off.sh"
+    mode: 0755
+
+- name: run hat-off script
+  shell: ./hat-off.sh
+  args:
+    chdir: "/home/{{ ansible_user }}/scripts"
+    warn: no
+
+- name: sleep for 10 seconds and continue with play
+  wait_for: 
+    timeout: 10
+  become: no
+  delegate_to: localhost

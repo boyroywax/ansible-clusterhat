@@ -1,0 +1,7 @@
+---
+
+- name: Shutdown the pizeros
+  command: /sbin/shutdown -h now
+  sudo: yes
+  async: 20
+  poll: 0

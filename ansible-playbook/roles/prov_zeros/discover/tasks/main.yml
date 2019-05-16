@@ -1,0 +1,24 @@
+---
+- name: install nmap and nslookup
+  apt:
+    update-cache: yes
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - dnsutils
+    - nmap
+    - net-tools
+
+- name: nmap
+plugin: nmap
+address: "{{ local_ip_range | default='192.168.0.1/24' }}"
+  # keyed_group: 
+  # - key: MAC_Address.Name
+  #   prefix: tag_Name_
+  #   seperator: ""
+  # groups:
+  #   pizero_prov: "'Raspberry Pi Foundation' in (tags|list)"
+  # compose:
+  #   # set the ansible_host variable to connect with the private IP address without changing the hostname
+  #   ansible_host: private_ip_address
+

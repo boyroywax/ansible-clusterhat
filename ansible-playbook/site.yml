@@ -1,0 +1,43 @@
+---
+- hosts: controller    
+  gather_facts: yes
+  become: yes
+  roles:
+    # - { role: sys/poweron_hat }
+    - { role: prov_zeros/discover}
+
+# - hosts: controller, pizero    
+#   gather_facts: yes
+#   become: yes
+#   roles:
+#     - { role: sys/update }
+
+# - hosts: pizero
+#   gather_facts: yes
+#   become: yes
+#   roles:
+#     - { role: docker/controller-install }
+
+# - hosts: pizero
+#   gather_facts: yes
+#   become: yes
+#   roles:
+#     - { role: docker/zero-install }
+
+# - hosts: pizero, controller
+#   gather_facts: yes
+#   become: yes
+#   roles:
+#     - { role: docker/common-install }
+
+# - hosts: pizero    
+#   gather_facts: yes
+#   become: yes
+#   roles:
+#     - { role: sys/shutdown_zero }
+
+# - hosts: controller    
+#   gather_facts: yes
+#   become: yes
+#   roles:
+#     - { role: sys/shutdown_hat }

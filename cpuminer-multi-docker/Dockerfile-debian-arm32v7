@@ -1,0 +1,11 @@
+FROM debian:stretch-slim
+
+RUN apt-get update && apt-get upgrade -y
+RUN apt-get install -y libcurl4-openssl-dev \
+  libjansson-dev libssl-dev libgmp-dev \
+  openssl libssl1.1
+RUN apt-get autoremove && apt-get clean
+
+COPY cpuminer /usr/bin
+
+

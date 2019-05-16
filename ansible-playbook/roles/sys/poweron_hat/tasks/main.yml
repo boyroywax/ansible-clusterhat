@@ -1,0 +1,31 @@
+---
+
+- name: create scripts dir in user home if not there
+  file:
+    path: "/home/{{ ansible_user }}/scripts"
+    state: directory
+
+- name: copy hat-on script template
+  template:
+    src: "hat-on.j2"
+    dest: "/home/{{ ansible_user }}/scripts/hat-on.sh"
+    mode: 0755
+
+- name: run hat-on script
+  shell: ./hat-on.sh
+  args:
+    chdir: "/home/{{ ansible_user }}/scripts"
+    warn: no
+
+- name: wait for pizeros to boot
+  wait_for: 
+    port: 22
+    host: "{{ item }}"
+    delay: 10 
+    state: present
+    timeout: 60
+  with_items: 
+    - "{{ hostvars['inventory_hostname'] | list }}"
+  delegate_to: localhost
+
+    

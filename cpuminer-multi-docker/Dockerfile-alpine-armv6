@@ -1,0 +1,19 @@
+FROM hypriot/rpi-alpine
+
+RUN apk upgrade
+RUN apk --update add --no-cache \
+  zlib-dev automake alpine-sdk
+RUN apk add --no-cache autoconf openssl-dev
+RUN apk add --no-cache libcurl curl-dev
+
+WORKDIR /code
+
+COPY .  /code
+RUN ./autogen.sh
+RUN ./configure --disable-assembly CFLAGS="-march=native" --with-crypto --with-curl
+RUN make install
+
+FROM hypriot/rpi-alpine
+RUN apk --no-cache add ca-certificates openssl
+WORKDIR /bin
+COPY --from=0 /bin/cpumulti .
