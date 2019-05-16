@@ -4,3 +4,4 @@ xauth
 cpuminer-multi-docker/.DS_Store
 sd_card/.DS_Store
 .DS_Store
+sd_card/boot-controller/wpa_supplicant.conf
