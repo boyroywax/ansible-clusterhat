@@ -1,26 +1,47 @@
 ---
 
-- name: install nmap
-  apt:
-    update_cache: yes
-    name: "{{ packages }}"
-  vars:
-    packages:
-    - nmap
+# - name: install nmap
+#   apt:
+#     update_cache: yes
+#     name: "{{ packages }}"
+#   vars:
+#     packages:
+#     - nmap
+
+- name: create tmp file for nmap xml nmap_results
+  file:
+    path: /tmp/nmap_results.xml
+    state: touch
+
 
 - name: get all the connected hosts
-  shell: nmap -sn 192.168.0.1/24
-  register: nmap_output
+  shell: nmap -sn 192.168.0.1/24 -oX nmap_results.xml
   args:
+    chdir: /tmp
     warn: no
 
-- name: Display all the ips
-  debug: 
-    msg: "{{ item }}"
-  loop: "{{nmap_output.stdout_lines}}"
+- name: retrieve the nmap_results.xml file
+  xml:
+    path: /tmp/nmap_results.xml
+    pretty_print: true
+    xpath: host/address
+    attribute: "vendor"
+    value: "Raspberry Pi Foundation"
 
-- name: pull out the lines with Raspberry Pi Mac Addresses
-  debug: 
-    msg: "{{ item }}"
-  loop: "{{nmap_output.stdout_lines}}"
-  when: item.find('Raspberry Pi Foundation') !=- 1
+  register: possible_pi_zero
+
+- name: Show an attribute value
+  debug:
+    var: "{{item}}"
+  loop: "{{possible_pi_zero}}"
+
+# - name: Display all the ips
+#   debug: 
+#     msg: "{{ item }}"
+#   loop: "{{nmap_output.stdout_lines}}"
+
+# - name: pull out the lines with Raspberry Pi Mac Addresses
+#   debug: 
+#     msg: "{{ item }}"
+#   loop: "{{nmap_output.stdout_lines}}"
+#   when: item.find('Raspberry Pi Foundation') !=- 1
