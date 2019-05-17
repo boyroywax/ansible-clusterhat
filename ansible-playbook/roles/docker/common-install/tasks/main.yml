@@ -2,6 +2,7 @@
 
 - name: install python3-pip
   apt:
+    update_cache: yes
     name: "{{ packages }}"
   vars:
     packages:

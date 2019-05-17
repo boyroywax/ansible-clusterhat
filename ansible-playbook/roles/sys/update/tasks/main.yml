@@ -10,23 +10,12 @@
   async: 6400
   poll: 15
 
-- name: remove mess up
+- name: Activating cgroup on Raspbian
   lineinfile:
     path: /boot/cmdline.txt
-    line: '\1 cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory'
-    state: absent
-
-# - name: Activating cgroup on Raspbian
-#   lineinfile:
-#     path: /boot/cmdline.txt
-#     regexp: '^dwc_otg.lpm_enable=0*'
-#     line: ' cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory '
-#     insertbefore: regexp
-#     state: present
-
-- name: Disable Swap
-  shell: dphys-swapfile swapoff && dphys-swapfile uninstall && update-rc.d dphys-swapfile remove
-  ignore_errors: True
+    regexp: '((.)+?)(\scgroup_\w+=\w+)*$'
+    line: ' cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory '
+    backrefs: yes
 
 - name: Set GPU memory split to 16 MB
   lineinfile:
@@ -36,7 +25,7 @@
 
 - name: Upgrade apt cache
   apt:
-    upgrade: yes
+    upgrade: safe
   async: 6400
   poll: 15
 
@@ -51,3 +40,12 @@
     autoremove: yes
   async: 2000
   poll: 5
+
+- name: Disable Swap
+  shell: dphys-swapfile swapoff && dphys-swapfile uninstall && update-rc.d dphys-swapfile remove
+  ignore_errors: True
+
+- name: Set hostname to inventory hostname
+  hostname:
+    name: "{{ inventory_hostname }}"
+  when: "'pizero' in group_names"

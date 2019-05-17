@@ -1,0 +1,29 @@
+---
+
+# - name: install nmap
+#   apt:
+#     update_cache: yes
+#     name: "{{ packages }}"
+#   vars:
+#     packages:
+#     - nmap
+
+- name: get all the connected hosts
+  shell: nmap -sn 192.168.0.1/24
+  register: nmap_output
+  args:
+    warn: no
+
+- name: Display all the ips
+  debug: 
+    msg: "{{ item }}"
+  loop: "{{nmap_output.stdout_lines}}"
+
+- set_fact:
+    pizero_default_hosts: []
+
+- name: pull out the lines with Raspberry Pi Mac Addresses
+  debug: 
+    msg: "{{ item }}"
+  loop: "{{nmap_output.stdout_lines}}"
+  when: item.find('Raspberry Pi Foundation') !=- 1
