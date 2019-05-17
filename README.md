@@ -92,9 +92,7 @@ Time Estimate: 45 mninutes to 1 hour
     ```
     * Source: [itsfoss.com - find what devices are connected to network](https://itsfoss.com/how-to-find-what-devices-are-connected-to-network-in-ubuntu/)
   
-  ```bash
-  sudo pip install pysnmp
-  ```
+
 
 
 ## Install Steps:

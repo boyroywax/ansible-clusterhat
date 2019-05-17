@@ -1,12 +1,12 @@
 ---
 
-# - name: install nmap
-#   apt:
-#     update_cache: yes
-#     name: "{{ packages }}"
-#   vars:
-#     packages:
-#     - nmap
+- name: install nmap
+  apt:
+    update_cache: yes
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - nmap
 
 - name: get all the connected hosts
   shell: nmap -sn 192.168.0.1/24
@@ -18,9 +18,6 @@
   debug: 
     msg: "{{ item }}"
   loop: "{{nmap_output.stdout_lines}}"
-
-- set_fact:
-    pizero_default_hosts: []
 
 - name: pull out the lines with Raspberry Pi Mac Addresses
   debug: 
