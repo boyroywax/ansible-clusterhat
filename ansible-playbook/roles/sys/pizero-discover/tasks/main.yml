@@ -10,30 +10,25 @@
 
 - name: create tmp file for nmap xml nmap_results
   file:
-    path: /tmp/nmap_results.xml
+    path: /tmp/nmap_results
     state: touch
 
 
 - name: get all the connected hosts
-  shell: nmap -sn 192.168.0.1/24 -oX nmap_results.xml
+  shell: nmap -sn 192.168.0.1/24 -oG nmap_results
   args:
     chdir: /tmp
     warn: no
 
-- name: retrieve the nmap_results.xml file
-  xml:
-    path: /tmp/nmap_results.xml
-    pretty_print: true
-    xpath: host/address
-    attribute: "vendor"
-    value: "Raspberry Pi Foundation"
-
+- name: retrieve the greppable nmap_results 
+  slurp:
+    src: /tmp/nmap_results
   register: possible_pi_zero
 
 - name: Show an attribute value
   debug:
-    var: "{{item}}"
-  loop: "{{possible_pi_zero}}"
+    var: "{{ item }}"
+  loop: "{{ possible_pi_zero.stdout_lines }}"
 
 # - name: Display all the ips
 #   debug: 

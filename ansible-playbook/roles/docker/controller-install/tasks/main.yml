@@ -6,32 +6,26 @@
 #   async: 6400
 #   poll: 5
 
-# - name: fetch the docker install script
-#   get_url: 
-#       url: https://get.docker.com 
-#       dest: /tmp/docker.sh
-#       validate_certs: False 
-#   async: 3000
-#   poll: 5
+- name: fetch the docker install script
+  get_url: 
+      url: https://get.docker.com 
+      dest: /tmp/docker.sh
+      validate_certs: False 
 
-# - name: set file settings for script
-#   file:
-#     path: /tmp/docker.sh
-#     state: file
-#     mode: 0777
-#   async: 3000
-#   poll: 5
+- name: set file settings for script
+  file:
+    path: /tmp/docker.sh
+    state: file
+    mode: 0777
 
-# - name: execute the script
-#   shell: docker.sh
-#   args:
-#     chdir: /tmp
-#   async: 3000
-#   poll: 5
+- name: execute the script
+  shell: docker.sh
+  args:
+    chdir: /tmp
 
-- name: Run the equivalent of "apt-get update" as a separate step
-  apt:
-    update_cache: yes
+# - name: Run the equivalent of "apt-get update" as a separate step
+#   apt:
+#     update_cache: yes
   
 # - name: download docker-ce
 #   apt:
