@@ -1,12 +1,12 @@
 ---
 
-# - name: install nmap
-#   apt:
-#     update_cache: yes
-#     name: "{{ packages }}"
-#   vars:
-#     packages:
-#     - nmap
+- name: install nmap
+  apt:
+    update_cache: yes
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - nmap
 
 - name: create tmp file for nmap xml nmap_results
   file:
