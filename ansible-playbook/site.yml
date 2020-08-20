@@ -1,7 +1,8 @@
 ---
-- hosts: controller    
+- hosts: 127.0.0.1    
   gather_facts: yes
   become: yes
+  connection: local
   roles:
     # - { role: sys/poweron_hat }
     - { role: sys/pizero-discover}
