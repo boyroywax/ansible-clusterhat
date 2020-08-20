@@ -1,6 +1,5 @@
 ---
-- hosts: 127.0.0.1    
-  gather_facts: yes
+- hosts: 127.0.0.1
   become: yes
   connection: local
   roles:
