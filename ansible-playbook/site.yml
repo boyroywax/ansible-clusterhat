@@ -34,10 +34,10 @@
   gather_facts: yes
   become: yes
   roles:
-    - { role: sys/shutdown_zero }
+    - { role: sys/pizero-shutdown }
 
 - hosts: 127.0.0.1    
   connections: local
   become: yes
   roles:
-    - { role: sys/shutdown_hat }
+    - { role: sys/hat-shutdown }
