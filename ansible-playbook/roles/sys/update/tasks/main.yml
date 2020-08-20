@@ -45,7 +45,3 @@
   shell: dphys-swapfile swapoff && dphys-swapfile uninstall && update-rc.d dphys-swapfile remove
   ignore_errors: True
 
-- name: Set hostname to inventory hostname
-  hostname:
-    name: "{{ inventory_hostname }}"
-  when: "'pizero' in group_names"

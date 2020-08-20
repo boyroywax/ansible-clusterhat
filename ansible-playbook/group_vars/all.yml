@@ -1,3 +1,3 @@
-localhost_user: jdev
+localhost_user: pi
 localhost_ssh_dir: "/Users/{{ localhost_user }}"
-local_ip_range: 192.168.0.1/24
+local_ip_range: 192.168.10.1/24
