@@ -13,7 +13,6 @@
     path: /tmp/nmap_results
     state: touch
 
-
 - name: get all the connected hosts
   shell: nmap -sn {{ local_ip_range }} -oG nmap_results
   args:
