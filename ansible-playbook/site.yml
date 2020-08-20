@@ -37,7 +37,7 @@
     - { role: sys/pizero-shutdown }
 
 - hosts: 127.0.0.1    
-  connections: local
+  connection: local
   become: yes
   roles:
     - { role: sys/hat-shutdown }
