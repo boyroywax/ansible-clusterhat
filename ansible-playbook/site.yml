@@ -3,15 +3,15 @@
   become: yes
   connection: local
   roles:
-    # - { role: sys/poweron_hat }
+    - { role: sys/poweron_hat }
     # - { role: sys/pizero-discover }
     - {  role: sys/controller-update }
 
-# - hosts: controller, pizero
-#   gather_facts: yes
-#   become: yes
-#   roles:
-#     - { role: sys/update }
+- hosts: pizero
+  gather_facts: yes
+  become: yes
+  roles:
+    - { role: sys/pizero-update }
 
 # - hosts: pizero
 #   gather_facts: yes
