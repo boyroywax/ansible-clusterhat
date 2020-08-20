@@ -6,11 +6,11 @@
 #     # - { role: sys/poweron_hat }
 #     - { role: sys/pizero-discover}
 
-- hosts: controller, pizero
-  gather_facts: yes
-  become: yes
-  roles:
-    - { role: sys/update }
+# - hosts: controller, pizero
+#   gather_facts: yes
+#   become: yes
+#   roles:
+#     - { role: sys/update }
 
 # - hosts: pizero
 #   gather_facts: yes
@@ -30,14 +30,14 @@
 #   roles:
 #     - { role: docker/common-install }
 
-# - hosts: pizero    
-#   gather_facts: yes
-#   become: yes
-#   roles:
-#     - { role: sys/shutdown_zero }
+- hosts: pizero    
+  gather_facts: yes
+  become: yes
+  roles:
+    - { role: sys/shutdown_zero }
 
-# - hosts: controller    
-#   gather_facts: yes
-#   become: yes
-#   roles:
-#     - { role: sys/shutdown_hat }
+- hosts: 127.0.0.1    
+  connections: local
+  become: yes
+  roles:
+    - { role: sys/shutdown_hat }
