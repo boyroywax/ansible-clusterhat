@@ -3,7 +3,7 @@
   become: yes
   connection: local
   roles:
-    - { role: sys/poweron_hat }
+    - { role: sys/hat-poweron }
     # - { role: sys/pizero-discover }
     - {  role: sys/controller-update }
 
