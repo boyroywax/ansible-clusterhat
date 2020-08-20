@@ -1,0 +1,47 @@
+---
+- name: Ensure US locale exists
+  locale_gen:
+    name: en_US.UTF-8
+    state: present
+  
+- name: Update apt cache
+  apt:
+    update_cache: yes
+  async: 6400
+  poll: 15
+
+- name: Activating cgroup on Raspbian
+  lineinfile:
+    path: /boot/cmdline.txt
+    regexp: '((.)+?)(\scgroup_\w+=\w+)*$'
+    line: ' cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory '
+    backrefs: yes
+
+# - name: Set GPU memory split to 16 MB
+#   lineinfile:
+#     path: /boot/config.txt
+#     line: 'gpu_mem=16'
+#     create: yes
+
+- name: Upgrade apt cache
+  apt:
+    upgrade: safe
+  async: 6400
+  poll: 15
+
+- name: Remove useless packages from the cache
+  apt:
+    autoclean: yes
+  async: 2000
+  poll: 5
+
+- name: Remove dependencies that are no longer required
+  apt:
+    autoremove: yes
+  async: 2000
+  poll: 5
+
+# - name: Disable Swap
+#   shell: dphys-swapfile swapoff && dphys-swapfile uninstall && update-rc.d dphys-swapfile remove
+#   ignore_errors: True
+
