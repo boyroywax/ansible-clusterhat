@@ -5,7 +5,7 @@
     host: "{{ item }}"
     delay: 10 
     state: started
-    timeout: 60
+    timeout: 360
   with_items: 
     - "{{ hostvars['inventory_hostname'] | list }}"
   delegate_to: localhost
